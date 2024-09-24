@@ -13,7 +13,7 @@ import { Button } from '../ui/button'
 import { useToast } from '../ui/use-toast'
 
 const dashlist = [
-  'Borrowers', 'Loans', 'Repayments', 'Loan parameters', 'Accounting', 'Reports', 'Collateral', 'Access Configuration', 'Savings', 'Investor accounts', 'Settings', 'Sign out'
+  'Borrowers', 'Loans', 'Repayments', 'Loan parameters', 'Accounting', 'Reports', 'Collateral', 'Access Configuration', 'Savings', 'Investor accounts', 'Settings'
 ]
 
 const AdminDashboard = () => {
