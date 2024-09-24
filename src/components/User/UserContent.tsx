@@ -63,8 +63,12 @@ const UserContent = () => {
       <div className="flex justify-center">
         <div className="h-32 mt-20 w-2/5 flex justify-between">
           <div className="bg-green-200 h-20 p-3">
-            <p>Deficit</p>
-            <p>{userLoans.length && (userLoans.reduce((a,c)=> a.loanAmount + c.loanAmount))}</p>          </div>
+            <p>Deficit Rs:</p>
+            <p>
+              {userLoans.length > 0
+                ? userLoans.reduce((accumulator, loan) => accumulator + loan.loanAmount, 0)
+                : 0}
+            </p>               </div>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="outline">Get a loan</Button>
@@ -181,29 +185,30 @@ const UserContent = () => {
               </tr>
             </thead>
             <tbody>
-              {userLoans.length > 0 &&
-                (userLoans.map((loan) => {
-                  return <tr className="border-b">
-                    <td className="px-4 py-2 flex items-center">
-                      <img src="https://via.placeholder.com/40" alt="Officer Image" className="w-10 h-10 rounded-full mr-3" />
-                      <span>{loan.fullName}</span>
-                    </td>
-                    <td className="px-4 py-2">Rs:{loan.loanAmount}</td>
-                    <td className="px-4 py-2">{`${String(new Date(loan.createdAt).getDate()).padStart(2, '0')}-${String(new Date(loan.createdAt).getMonth() + 1).padStart(2, '0')}-${new Date(loan.createdAt).getFullYear()}`}</td>
-                    <td className="px-4 py-2">
-                      <span
-                        className={`px-3 py-1 rounded-full ${loan.loanStatus === "Pending" ? "bg-yellow-100 text-yellow-800" :
-                          loan.loanStatus === "Verified" ? "bg-green-100 text-green-800" :
-                            loan.loanStatus === "Rejected" ? "bg-red-100 text-red-800" :
-                              loan.loanStatus === "Approved" ? "bg-blue-100 text-blue-800" :
-                                "bg-gray-100 text-gray-800"
-                          }`}
-                      >
-                        {loan.loanStatus}
-                      </span>
-                    </td>
-                  </tr>
-                }))}
+              {userLoans.length > 0 && userLoans.map((loan) => (
+                <tr key={loan._id} className="border-b">
+                  <td className="px-4 py-2 flex items-center">
+                    <img src="https://via.placeholder.com/40" alt="Officer Image" className="w-10 h-10 rounded-full mr-3" />
+                    <span>{loan.fullName}</span>
+                  </td>
+                  <td className="px-4 py-2">Rs: {loan.loanAmount}</td>
+                  <td className="px-4 py-2">
+                    {`${String(new Date(loan.createdAt).getDate()).padStart(2, '0')}-${String(new Date(loan.createdAt).getMonth() + 1).padStart(2, '0')}-${new Date(loan.createdAt).getFullYear()}`}
+                  </td>
+                  <td className="px-4 py-2">
+                    <span
+                      className={`px-3 py-1 rounded-full ${loan.loanStatus === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                        loan.loanStatus === "Verified" ? "bg-green-100 text-green-800" :
+                          loan.loanStatus === "Rejected" ? "bg-red-100 text-red-800" :
+                            loan.loanStatus === "Approved" ? "bg-blue-100 text-blue-800" :
+                              "bg-gray-100 text-gray-800"
+                        }`}
+                    >
+                      {loan.loanStatus}
+                    </span>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           {userLoans.length === 0 && <p className='text-center mt-10 text-md'>No loans applied</p>}
